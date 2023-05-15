@@ -15,7 +15,8 @@
 	<my:navBar current="list"></my:navBar>
 	<my:alert></my:alert>
 	<div class="container-lg">
-		<h1>게시물 목록 보기</h1>
+		<h1>게시물 목록</h1>
+		<!-- 새로작성된 코드 변경된 코드!! -->
 		<table class="table">
 			<thead>
 				<tr>
@@ -29,7 +30,12 @@
 				<c:forEach items="${boardList}" var="board">
 					<tr>
 						<td>${board.id }</td>
-						<td><a href="/id/${board.id }"> ${board.title } </a></td>
+						<td><a href="/id/${board.id }"> ${board.title } </a>
+							<span class="badge text-bg-info">
+							<i class="fa-sharp fa-regular fa-image"></i> 
+							${board.fileCount }
+							</span>
+						</td>
 						<td>${board.writer }</td>
 						<td>${board.inserted }</td>
 					</tr>
@@ -47,42 +53,51 @@
 				<c:if test="${pageInfo.currentPageNum ne 1 }">
 					<c:url value="/list" var="pageLink">
 							<c:param name="page" value="${pageInfo.firstPageNum}" />
+							<c:if test="${not empty param.search }">
+								<c:param name="search" value="${param.search }" />
+							</c:if>
+							<!-- 처음버튼 눌러도 검색값 변하지 않게 하기 -->
+							<c:if test="${not empty param.type }">
+							<c:param name="type" value="${param.type }"/>
+							</c:if>
 						</c:url>
 						<li class="page-item"><a class="page-link" href="${pageLink }"> <i class="fa-solid fa-angles-left"></i>
 						</a></li>
 						</c:if>
 				
 					<!-- 이전버튼 -->
-					<c:if test="${pageInfo.currentPageNum ne 1 }">
+					<c:if test="${pageInfo.currentPageNum gt 1 }">
 						<!--1보다 클때 라고 해도 됨  -->
-						<c:url value="/list" var="pageLink">
-							<c:param name="page" value="${pageInfo.currentPageNum -1 }" />
-						</c:url>
-						<li class="page-item"><a class="page-link" href="${pageLink }"> <i class="fa-solid fa-angle-left"></i>
-						</a></li>
+						<!-- 이전버튼 : {pageInfo.currentPageNum -1 } -->
+						<my:pageItem pageNum="${pageInfo.currentPageNum -1}">
+							<i class="fa-solid fa-angle-left"></i>
+						</my:pageItem>
 					</c:if>
 
 					<c:forEach begin="${pageInfo.leftPageNum }" end="${pageInfo.rightPageNum }" var="pageNum">
-						<c:url value="/list" var="pageLink">
-							<c:param name="page" value="${pageNum }" />
-						</c:url>
-						<li class="page-item">
-							<a class="page-link ${pageNum eq pageInfo.currentPageNum ? 'active' : '' }" href="${pageLink }">${pageNum }</a>
-						</li>
+						<my:pageItem pageNum="${pageNum }">
+						${pageNum }
+						</my:pageItem>
 					</c:forEach>
 					
 					<!-- 다음 버튼 -->
 					<c:if test="${pageInfo.currentPageNum lt pageInfo.lastPageNum }">
-						<c:url value="/list" var="pageLink">
-							<c:param name="page" value="${pageInfo.currentPageNum + 1 }" />
-						</c:url>
-						<li class="page-item"><a class="page-link" href="${pageLink }"><i class="fa-solid fa-angle-right"></i>
-						</a></li>
+						<!-- 페이지 번호 : ${pageInfo.currentPageNum + 1 } -->
+						<my:pageItem pageNum="${pageInfo.currentPageNum + 1}">
+							
+						<i class="fa-solid fa-angle-right"></i>
+						</my:pageItem>
 					</c:if>
 					<!-- 마지막 버튼 -->
 					<c:if test="${pageInfo.currentPageNum lt pageInfo.lastPageNum }">
 					<c:url value="/list" var="pageLink">
-							<c:param name="page" value="${pageInfo.lastPageNum}" />
+							<c:param name="page" value="${pageInfo.endPageNum}" />
+							<c:if test="${not empty param.search }">
+								<c:param name="search" value="${param.search }" />
+							</c:if>
+							<c:if test="${not empty param.type }">
+								<c:param name="type" value="${param.type }" />
+							</c:if>
 						</c:url>
 						<li class="page-item"><a class="page-link" href="${pageLink }"> <i class="fa-solid fa-angles-right"></i>
 						</a></li>

@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<!-- tag 쓰고 싶을때 설정 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,34 +11,23 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<my:navBar current="add"></my:navBar>
+
+	<my:navBar></my:navBar>
 	<my:alert></my:alert>
+
 	<div class="container-lg">
 		<div class="row justify-content-center">
-			<div class="col-12 col-md-10 col-lg-8">
-				<h1>게시물 작성</h1>
-				<form method="post" enctype="multipart/form-data"">
+			<div class="col-10 col-md-6 col-lg-4">
+				<form action="" method="post">
 					<div class="mb-3">
-					<label for="titleInput" class="form-label">제목</label>
-						<input type="text" id="titleInput" class="form-control" name="title" value="${board.title }" />
+						<label for="inputUsername" class="form-label"></label>아이디 
+						<input type="text" name="username" id="inputUsername" class="form-control" />
 					</div>
 					<div class="mb-3">
-					<label for="bodyTextarea" class="form-label">본문</label>
-						<textarea rows="10" name="body" id="bodyTextarea" class="form-control">${board.title }</textarea>
+						<label for="inputPassword" class="fomr-label"></label> 암호 
+						<input type="password" name="password" id="inputPassword" class="form-control" /> 
 					</div>
-					
-					<div><!-- accept는 허용한 파일 속성만 올릴 수 있음  -->
-						<label for="fileInput" class="form-label">그림파일</label>
-						<input type="file" id="fileInput" class="form-control"name="fileList" accept="image/*" multiple/>
-						<div class="form-text">
-							총10MB, 하나의 파일은 1MB를 초과할 수 없습니다. 
-						</div>
-					</div>
-					
-					<div class="mt-3">
-					<input class="btn btn-primary" type="submit" value="게시" />
-					</div>
-					
+						<input type="submit" class="btn btn-primary" value="로그인" />
 				</form>
 			</div>
 		</div>
